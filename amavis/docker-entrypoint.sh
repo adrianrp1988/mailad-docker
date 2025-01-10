@@ -9,7 +9,7 @@ fi
 
 SPAM=NO
 # spamassasin enabled
-if [ -z "${AMAVIS_SPAMASSASSIN_DISABLED}" ] ; then
+if [ -z "${AMAVIS_SPAMASSASSIN_DISABLED}" ] || [ "${AMAVIS_SPAMASSASSIN_DISABLED}" = "0" ] ; then
     # enable it
     echo '@bypass_spam_checks_maps = ( \%bypass_spam_checks, \@bypass_spam_checks_acl, \$bypass_spam_checks_re); ' >> /etc/amavis/conf.d/15-content_filter_mode
     SPAM=YES
@@ -19,7 +19,7 @@ else
 fi
 
 # AV enabled
-if [ -z "${AMAVIS_AV_DISABLED}" ] ; then
+if [ -z "${AMAVIS_AV_DISABLED}" ] || [ "${AMAVIS_AV_DISABLED}" = "0" ] ; then
     # enable av
     echo '@bypass_virus_checks_maps = ( \%bypass_virus_checks, \@bypass_virus_checks_acl, \$bypass_virus_checks_re);' >> /etc/amavis/conf.d/15-content_filter_mode
     echo "AV Enabled by default!!!"
@@ -28,7 +28,7 @@ else
 fi
 
 #if dkim signing enabled
-if [ ! -z "${AMAVIS_DKIM_SIGNING_DISABLED}" ] ; then
+if [ -z "${AMAVIS_DKIM_SIGNING_DISABLED}" ] || [ "${AMAVIS_DKIM_SIGNING_DISABLED}" = "0" ] ; then
   # check for DKIM domain configuration
   if [[ ! -z "${AMAVIS_DKIM_DOMAIN}" ]] ; then
     echo "Setup DKIM signing"
