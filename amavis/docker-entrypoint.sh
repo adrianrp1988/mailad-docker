@@ -32,7 +32,7 @@ if [ -z "${AMAVIS_DKIM_SIGNING_DISABLED}" ] || [ "${AMAVIS_DKIM_SIGNING_DISABLED
   # check for DKIM domain configuration
   if [[ ! -z "${AMAVIS_DKIM_DOMAIN}" ]] ; then
     echo "Setup DKIM signing"
-    echo '$enable_dkim_signing = 1;' >> /etc/amavis/conf.d/22-dkim_signing
+    echo '$enable_dkim_signing = 1;' > /etc/amavis/conf.d/22-dkim_signing
     #Generate domain key
     if [[ ! -f "/var/lib/amavis/dkim/${AMAVIS_DKIM_DOMAIN}.pem" ]] ; then
         echo "DKIM key not present for domain ${AMAVIS_DKIM_DOMAIN} ...generating!!!"
