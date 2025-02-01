@@ -13,6 +13,14 @@ if [ ! -f /etc/clamav/configured ] ; then
     if [ ! -z "${CLAMAV_ALTERNATE_MIRROR}" ]; then
         sed -i s/"DatabaseMirror .*$"/""/g /etc/clamav/freshclam.conf
         echo "DatabaseMirror ${CLAMAV_ALTERNATE_MIRROR}" >> /etc/clamav/freshclam.conf
+        
+        if [ ! -z "${CLAMAV_MIRROR_CUSTOM_URL}" ] && [ "${CLAMAV_MIRROR_CUSTOM_URL}" = 1 ]; then
+            echo "PrivateMirror ${CLAMAV_ALTERNATE_MIRROR}" >> /etc/clamav/freshclam.conf
+            echo "DatabaseCustomURL http://${CLAMAV_ALTERNATE_MIRROR}/main.cvd" >> /etc/clamav/freshclam.conf
+            echo "DatabaseCustomURL http://${CLAMAV_ALTERNATE_MIRROR}/daily.cvd" >> /etc/clamav/freshclam.conf
+            echo "DatabaseCustomURL http://${CLAMAV_ALTERNATE_MIRROR}/bytecode.cvd" >> /etc/clamav/freshclam.conf
+            echo "DatabaseCustomURL http://${CLAMAV_ALTERNATE_MIRROR}/safebrowsing.cvd" >> /etc/clamav/freshclam.conf
+        fi
     fi
 
     touch /etc/clamav/configured
